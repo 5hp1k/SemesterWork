@@ -1,11 +1,14 @@
 {
   "name": "semester-work",
-  "version": "0.0.1",
-  "description": "semester work",
+  "version": "idk",
+  "description": "just a tiny website",
   "main": "run.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC"
+  "author": "5hpik",
+  "license": "ISC",
+  "dependencies": {
+    "node-fetch": "^3.3.1"
+  }
 }
