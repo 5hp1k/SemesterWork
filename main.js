@@ -4,6 +4,7 @@ const startButton = document.getElementById('startButton');
 const getImageButton = document.getElementById('getImageButton');   
 const welcomeSection = document.getElementById('welcome');
 const mainContentSection = document.getElementById('mainContent');
+const image = document.getElementById('image');
 
 usernameElement.textContent = "введите имя пользователя";
 
@@ -18,14 +19,10 @@ startButton.addEventListener('click', () => {
 
 async function getRandomCapybaraImage() {
     await fetch('https://api.capy.lol/v1/capybaras?random=true').then(response =>  response.json()).then(data => {
-      const imageUrl = data.url;
+      const imageUrl = data.data[0].url;
   
-      const image = document.createElement('img');
       image.src = imageUrl;
-      image.alt = 'Капибара';
-    
-      const mainContent = document.getElementById('mainContent');
-      mainContent.appendChild(image);
+      image.alt = 'Капибара';  
     }).catch(error => console.error('Error: ' + error))
   }
   
