@@ -29,6 +29,42 @@ const server = http.createServer((req, res) => {
       res.setHeader('Content-Type', 'text/javascript');
       res.end(data);
     });
+  } else if (req.url === '/cardOperations.mjs') {
+    fs.readFile('./cardOperations.mjs', (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+        return;
+      }
+
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/javascript');
+      res.end(data);
+    });
+  } else if (req.url === '/player.mjs') {
+    fs.readFile('./player.mjs', (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+        return;
+      }
+
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/javascript');
+      res.end(data);
+    });
+  } else if (req.url === '/dealer.mjs') {
+    fs.readFile('./dealer.mjs', (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+        return;
+      }
+
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/javascript');
+      res.end(data);
+    });
   } else if (req.url === '/styles.css') {
       fs.readFile('./styles.css', (err, data) => {
         if (err) {

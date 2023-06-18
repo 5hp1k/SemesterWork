@@ -1,31 +1,28 @@
+import Deck from "./cardOperations.mjs"
+import Player from "./player.mjs"
+import Dealer from "./dealer.mjs"
+
 const usernameElement = document.getElementById('username');
 const nameInput = document.getElementById('name');
 const startButton = document.getElementById('startButton');
-const getImageButton = document.getElementById('getImageButton');   
+const newDeckButton = document.getElementById('newDeckButton');   
 const welcomeSection = document.getElementById('welcome');
-const mainContentSection = document.getElementById('mainContent');
-const image = document.getElementById('image');
+const gameContentSection = document.getElementById('gameContent');
 
 usernameElement.textContent = "введите имя пользователя";
+let deck = new Deck();
+deck.newDeck();
 
 startButton.addEventListener('click', () => {
   const username = nameInput.value;
   if (username) {
     welcomeSection.style.display = 'none';
-    mainContentSection.style.display = 'block';
+    gameContentSection.style.display = 'block';
     usernameElement.textContent = username;
   }
 });
-
-async function getRandomCapybaraImage() {
-    await fetch('https://api.capy.lol/v1/capybaras?random=true').then(response =>  response.json()).then(data => {
-      const imageUrl = data.data[0].url;
   
-      image.src = imageUrl;
-      image.alt = 'Капибара';  
-    }).catch(error => console.error('Error: ' + error))
-  }
-  
-  getImageButton.addEventListener('click', () => {
-    getRandomCapybaraImage();
+newDeckButton.addEventListener('click', () => {
+    deck.newDeck();
   });
+

@@ -1,11 +1,9 @@
 {
   "name": "semester-work",
-  "version": "idk",
-  "description": "just a tiny website",
+  "version": "18.1",
+  "description": "just a tiny card game website",
   "main": "run.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "author": "5hpik",
   "license": "ISC"
 }
