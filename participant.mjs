@@ -19,6 +19,12 @@ export default class Participant {
         return this.score;
     }
 
+    async setPicture() {
+        await fetch('https://api.capy.lol/v1/capybara?json=true').then(response =>  response.json()).then(data => {
+            this.picture = data.data.url;
+        }).catch(error => console.error('Error: ' + error))
+    }
+
     computeScore() {
         let hasAce = false;
 

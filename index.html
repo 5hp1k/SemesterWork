@@ -2,49 +2,54 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Ultimate Blackjack</title>
+    <title>JackBlack</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <header>
-        <h1>Привет, <span id="username"></span>!</h1>
+        <h1><span id="username">Привет, введите имя пользователя</span>!</h1>
     </header>
 
     <main>
     <section id="welcome">
-        <h2>Добро пожаловать!</h2>
-        <label for="name">Введите ваше имя:</label>
-        <input type="text" id="name" />
-        <button id="startButton">Далее</button>
-    </section>
-    <section id="gameContent" class="centered" style="display: none;">
-      <button id="newDeckButton">Новая колода</button>
-      <div class="game-container">
-          <div id="game-area">
-              <div id="dealer-area">
-                  <h2>Дилер (<span id="dealer-number"></span>)</h2>
-                  <div id="dealer-cards">
-                      <!-- Cards will appear here. -->
-                  </div>
-              </div>
-              <div id="player-area">
-                <h2>
-                  Игрок (<span id="player-number"></span>) <span id="announcement"></span>
-                </h2>
-                <div id="player-cards">
-                      <!-- Cards will appear here. -->
-                </div>
-              </div>
-              
-              <div id="action-area">
-                  <button id="newHandButton">Обновить руку</button>
-                  <button id="takeCardButton">Взять карту</button>
-                  <button id="passButton">Пас</button>
-              </div>
-          </div> 
-      </div>
-    </main>
+      <h2>Добро пожаловать!</h2>
+      <label for="name">Введите ваше имя:</label>
+      <input type="text" id="name" />
+      <button id="startButton">Далее</button>
 
+      </section>
+      <section id="gameContent" class="centered" style="display: none;">
+        <button id="newDeckButton">Новая колода</button>
+        <div class="game-container">
+            <div id="game-area">
+                <div id="dealer-area">
+                    <img id="dealer-avatar" src="" alt="Дилер">
+                    <h2>
+                      <span id="dealer-nickname">Дилер </span>(<span id="dealer-number">?</span>)
+                    </h2>
+                    <div id="dealer-cards">
+                        <!-- Cards will appear here. -->
+                    </div>
+                </div>
+                <div id="player-area">
+                  <img id="player-avatar" src="" alt="Игрок">
+                  <h2>
+                    <span id="player-nickname"></span> (<span id="player-number"></span>) <span id="announcement"></span>
+                  </h2>
+                  <div id="player-cards">
+                        <!-- Cards will appear here. -->
+                  </div>
+                </div>
+                
+                <div id="action-area">
+                    <button id="newHandButton">Обновить руку</button>
+                    <button id="takeCardButton">Взять карту</button>
+                    <button id="passButton">Пас</button>
+                </div>
+            </div> 
+        </div>
+      </section>
+    </main>
     <script src="main.js" type="module"></script>
 </body>
 </html>
