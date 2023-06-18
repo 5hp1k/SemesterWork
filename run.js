@@ -41,20 +41,8 @@ const server = http.createServer((req, res) => {
       res.setHeader('Content-Type', 'text/javascript');
       res.end(data);
     });
-  } else if (req.url === '/player.mjs') {
-    fs.readFile('./player.mjs', (err, data) => {
-      if (err) {
-        res.statusCode = 500;
-        res.end('Internal Server Error');
-        return;
-      }
-
-      res.statusCode = 200;
-      res.setHeader('Content-Type', 'text/javascript');
-      res.end(data);
-    });
-  } else if (req.url === '/dealer.mjs') {
-    fs.readFile('./dealer.mjs', (err, data) => {
+  } else if (req.url === '/participant.mjs') {
+    fs.readFile('./participant.mjs', (err, data) => {
       if (err) {
         res.statusCode = 500;
         res.end('Internal Server Error');

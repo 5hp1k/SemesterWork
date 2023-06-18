@@ -10,12 +10,28 @@ export default class Deck {
     }).catch(error => console.error('Error: ' + error))
   }
 
-  async newHand() {   
-    await fetch('https://deckofcardsapi.com/api/deck/${deckID}/draw/?count=2').then(response =>  response.json()).then(data => {
-      result = [data[0], data[1]]
-      console.log("Got a new hand: \n" + data[0] + data[1]);
-
-      return result;
+  async shuffleDeck() {
+    await fetch(`https://deckofcardsapi.com/api/deck/${this.deckID}/shuffle`).then(response =>  response.json()).then(data => {
+      console.log("Shuffled the deck with ID: \n" + this.deckID);
     }).catch(error => console.error('Error: ' + error))
   }
+
+  async newHand() {   
+    return fetch(`https://deckofcardsapi.com/api/deck/${this.deckID}/draw/?count=4`).then(response => response.json()).then(data => {
+        let result = data.cards;
+        console.log("Got a new hand: \n" + JSON.stringify(result));
+
+        return result;
+      }).catch(error => console.error('Error: ' + error));
+  }
+  
+  async drawCard() {
+    return fetch(`https://deckofcardsapi.com/api/deck/${this.deckID}/draw/?count=1`).then(response => response.json()).then(data => {
+        let result = data.cards[0];
+        console.log("Took a card: \n" + JSON.stringify(result));
+
+        return result;
+      }).catch(error => console.error('Error: ' + error));
+  }
+  
 } 

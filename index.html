@@ -17,26 +17,32 @@
         <input type="text" id="name" />
         <button id="startButton">Далее</button>
     </section>
-
     <section id="gameContent" class="centered" style="display: none;">
-        <div class="content-wrapper">
-          <h2>Дилер: <span id="dealerSum"></span></h2>
-          <div id="dealerCards">
-              <img id="hidden" src="">
-          </div>
-
-          <h2>Вы: <span id="playerSum"></span></h2>
-          <div id="playerCards"></div>
-
-          <br>
-          <button id="newDeckButton">Новая колода</button>
-          <button id="newHandButton">Обновить руку</button>
-          <button id="getCardButton">Взять</button>
-          <button id="passButton">Пас</button>
-          <p id="results"></p>
-        </div>
-      </section>
-
+      <button id="newDeckButton">Новая колода</button>
+      <div class="game-container">
+          <div id="game-area">
+              <div id="dealer-area">
+                  <h2>Дилер (<span id="dealer-number"></span>)</h2>
+                  <div id="dealer-cards">
+                      <!-- Cards will appear here. -->
+                  </div>
+              </div>
+              <div id="player-area">
+                <h2>
+                  Игрок (<span id="player-number"></span>) <span id="announcement"></span>
+                </h2>
+                <div id="player-cards">
+                      <!-- Cards will appear here. -->
+                </div>
+              </div>
+              
+              <div id="action-area">
+                  <button id="newHandButton">Обновить руку</button>
+                  <button id="takeCardButton">Взять карту</button>
+                  <button id="passButton">Пас</button>
+              </div>
+          </div> 
+      </div>
     </main>
 
     <script src="main.js" type="module"></script>
