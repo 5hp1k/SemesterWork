@@ -1,5 +1,6 @@
 import Deck from "./cardOperations.mjs"
 import Participant from "./participant.mjs";
+import writeTableData from "./tableData.mjs";
 
 let roundLost = false;
 let roundWon = false;
@@ -17,17 +18,24 @@ const playerNicknameNode = document.getElementById("player-nickname");
 
 const dealerAvatar = document.getElementById("dealer-avatar");
 const playerAvatar = document.getElementById("player-avatar");
-const usernameElement = document.getElementById('username');
+
 const nameInput = document.getElementById('name');
+
 const startButton = document.getElementById('startButton');
 const newDeckButton = document.getElementById('newDeckButton');
 const newHandButton = document.getElementById('newHandButton');  
 const takeCardButton = document.getElementById('takeCardButton');
-const passButton = document.getElementById('passButton');  
+const passButton = document.getElementById('passButton');
+const statsButton = document.getElementById('statsButton');
+
+const backButton = document.getElementById('backButton');
+const winButton = document.getElementById('winButton');
+const loseButton = document.getElementById('loseButton');
+const tieButton = document.getElementById('tieButton');
+
 const welcomeSection = document.getElementById('welcome');
 const gameContentSection = document.getElementById('gameContent');
-
-usernameElement.textContent = "Capybara Blackjack";
+const statContentSection = document.getElementById('statContent');
 
 let username = '';
 
@@ -46,7 +54,7 @@ async function initGame() {
   newDeckButton.disabled = false;
   newHandButton.disabled = false;
   takeCardButton.disabled = false;
-  passButton.disabled = false; 
+  passButton.disabled = false;
 
   announcementNode.textContent = "";
   dealerScoreNode.textContent = "?";
@@ -63,17 +71,20 @@ async function initGame() {
   renderPlayerHand();
 
   let playerScore = player.getScore();
+  let outcome;
   playerScoreNode.textContent = playerScore;
 
   if (playerScore > 21) {
     roundLost = true;
     announcementNode.textContent = "Проиграл!";
+    writeTableData("Поражение", playerScore, "?");
 
     takeCardButton.disabled = true;
     passButton.disabled = true; 
   }
   if (playerScore == 21) {
     announcementNode.textContent = "Выиграл!";
+    writeTableData("Победа", playerScore, "?");
 
     takeCardButton.disabled = true;
     passButton.disabled = true; 
@@ -120,10 +131,15 @@ async function dealerPlays() {
     await delay(900);
     await drawDealerCard();
     dealerScore = dealer.getScore();
+
+    if (dealerScore === 17 && dealerScore <= 21) {
+      break;
+    }
   }
 
   determineRoundResult();
 }
+
 
 async function drawDealerCard() {
   let card = await deck.drawCard();
@@ -137,22 +153,23 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-
 function determineRoundResult() {
   let dealerScore = dealer.getScore();
   let playerScore = player.getScore();
 
   if (dealerScore > 21) {
     roundWon = true;
-    announcementNode.textContent = "Дилер проиграл, победа за тобой!";
+    writeTableData("Победа", playerScore, dealerScore);
+    announcementNode.textContent = "Победа за тобой!";
   } else if (dealerScore > playerScore) {
     roundLost = true;
-    announcementNode.textContent = "Проиграл";
+    writeTableData("Поражение", playerScore, dealerScore);
+    announcementNode.textContent = "Ты проиграл!";
   } else if (dealerScore === playerScore) {
     roundTied = true;
+    writeTableData("Ничья", playerScore, dealerScore);
     announcementNode.textContent = "Ничья.";
   }
-
 }
 
 startButton.addEventListener('click', () => {
@@ -165,6 +182,15 @@ startButton.addEventListener('click', () => {
   }
 });
 
+statsButton.addEventListener('click', () => {
+  gameContentSection.style.display = 'none';
+  statContentSection.style.display = 'block';
+});
+
+backButton.addEventListener('click', () => {
+  gameContentSection.style.display = 'block';
+  statContentSection.style.display = 'none';
+});
 
 newDeckButton.addEventListener('click', async () => {
   await deck.newDeck();
@@ -202,12 +228,14 @@ takeCardButton.addEventListener('click', async () => {
   if (playerScore > 21) {
     roundLost = true;
     announcementNode.textContent = "Проиграл!";
+    writeTableData("Поражение", playerScore, "?");
 
     takeCardButton.disabled = true;
     passButton.disabled = true; 
   }
   if (playerScore == 21) {
     announcementNode.textContent = "Выиграл!";
+    writeTableData("Победа", playerScore, "?");
 
     takeCardButton.disabled = true;
     passButton.disabled = true; 
@@ -226,3 +254,22 @@ passButton.addEventListener('click', () => {
   newDeckButton.disabled = false;
   newHandButton.disabled = false;
 });
+
+allButton.addEventListener("click", () => filterTableData(""));
+winButton.addEventListener("click", () => filterTableData("Победа"));
+loseButton.addEventListener("click", () => filterTableData("Поражение"));
+tieButton.addEventListener("click", () => filterTableData("Ничья"));
+
+function filterTableData(outcome) {
+  const tableRows = document.querySelectorAll("#gameTableBody tr");
+
+  tableRows.forEach(row => {
+    const rowOutcome = row.querySelector("td:first-child").textContent;
+
+    if (outcome === "" || outcome === rowOutcome) {
+      row.style.display = "";
+    } else {
+      row.style.display = "none";
+    }
+  });
+}

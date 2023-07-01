@@ -53,7 +53,20 @@ const server = http.createServer((req, res) => {
       res.setHeader('Content-Type', 'text/javascript');
       res.end(data);
     });
-  } else if (req.url === '/styles.css') {
+  } else if (req.url === '/tableData.mjs') {
+    fs.readFile('./tableData.mjs', (err, data) => {
+      if (err) {
+        res.statusCode = 500;
+        res.end('Internal Server Error');
+        return;
+      }
+
+      res.statusCode = 200;
+      res.setHeader('Content-Type', 'text/javascript');
+      res.end(data);
+    });
+} 
+  else if (req.url === '/styles.css') {
       fs.readFile('./styles.css', (err, data) => {
         if (err) {
           res.statusCode = 500;
