@@ -121,54 +121,71 @@ function renderDealerHand(isDealerPlaying = false) {
   }); 
 }
 
-async function dealerPlays() {
-  let dealerScore = dealer.getScore();
+function hitMe(target) {
+  if (roundLost || roundWon || roundTied) {
+    return;
+  }
 
+  deck.drawCard()
+    .then(card => {
+      if (target === 'player') {
+        player.cards.push(card);
+        let cardDomElement = document.createElement("img");
+        cardDomElement.src = card.image;
+        playerCardsNode.appendChild(cardDomElement);
+
+        let playerScore = player.getScore();
+        playerScoreNode.textContent = playerScore;
+
+        if (playerScore > 21) {
+          roundLost = true;
+          announcementNode.textContent = "Ты проиграл.";
+          writeTableData("Поражение", playerScore, dealer.getScore());
+        }
+      }
+
+      if (target === 'dealer') {
+        dealer.cards.push(card);
+        let cardDomElement = document.createElement("img");
+        cardDomElement.src = card.image;
+        dealerCardsNode.appendChild(cardDomElement);
+        dealerPlays();
+      }
+    })
+    .catch(console.log);
+}
+
+function dealerPlays() {
+  if (roundLost || roundWon || roundTied) {
+    return;
+  }
+
+  let dealerScore = dealer.getScore();
   dealerScoreNode.textContent = dealerScore;
   dealerCardsNode.firstChild.src = dealer.cards[0].image;
 
-  while (dealerScore < 17) {
-    await delay(900);
-    await drawDealerCard();
-    dealerScore = dealer.getScore();
+  if (dealerScore < 17) {
+    setTimeout(() => hitMe('dealer'), 900);
+  } else {
+    let playerScore = player.getScore();
 
-    if (dealerScore === 17 && dealerScore <= 21) {
-      break;
+    if (dealerScore > 21) {
+      roundWon = true;
+      announcementNode.textContent = "Дилер проиграл. Ты победил!";
+      writeTableData("Победа", playerScore, dealerScore);
+    } else if (dealerScore > playerScore) {
+      roundLost = true;
+      announcementNode.textContent = "Ты проиграл.";
+      writeTableData("Поражение", playerScore, dealerScore);
+    } else if (dealerScore === playerScore) {
+      roundTied = true;
+      announcementNode.textContent = "Ничья.";
+      writeTableData("Ничья", playerScore, dealerScore);
+    } else {
+      roundWon = true;
+      announcementNode.textContent = "Ты победил!";
+      writeTableData("Победа", playerScore, dealerScore);
     }
-  }
-
-  determineRoundResult();
-}
-
-
-async function drawDealerCard() {
-  let card = await deck.drawCard();
-  dealer.cards.push(card);
-
-  renderDealerHand(true);
-  dealerScoreNode.textContent = dealer.getScore();
-}
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-function determineRoundResult() {
-  let dealerScore = dealer.getScore();
-  let playerScore = player.getScore();
-
-  if (dealerScore > 21) {
-    roundWon = true;
-    writeTableData("Победа", playerScore, dealerScore);
-    announcementNode.textContent = "Победа за тобой!";
-  } else if (dealerScore > playerScore) {
-    roundLost = true;
-    writeTableData("Поражение", playerScore, dealerScore);
-    announcementNode.textContent = "Ты проиграл!";
-  } else if (dealerScore === playerScore) {
-    roundTied = true;
-    writeTableData("Ничья", playerScore, dealerScore);
-    announcementNode.textContent = "Ничья.";
   }
 }
 
@@ -231,17 +248,17 @@ takeCardButton.addEventListener('click', async () => {
     writeTableData("Поражение", playerScore, "?");
 
     takeCardButton.disabled = true;
-    passButton.disabled = true; 
+    passButton.disabled = true;
   }
   if (playerScore == 21) {
     announcementNode.textContent = "Выиграл!";
     writeTableData("Победа", playerScore, "?");
 
     takeCardButton.disabled = true;
-    passButton.disabled = true; 
+    passButton.disabled = true;
   }
-
 });
+
 
 passButton.addEventListener('click', () => {
   newDeckButton.disabled = true;
