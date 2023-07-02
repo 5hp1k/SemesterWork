@@ -112,7 +112,7 @@ function renderDealerHand(isDealerPlaying = false) {
     let cardDomElement = document.createElement("img");
 
     if (i === 0 && !isDealerPlaying) {
-      cardDomElement.src = './jack_black.jpg';
+      cardDomElement.src = './card.png';
     } else {
       cardDomElement.src = card.image;
     }

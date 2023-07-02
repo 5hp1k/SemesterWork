@@ -78,8 +78,8 @@ const server = http.createServer((req, res) => {
         res.setHeader('Content-Type', 'text/css');
         res.end(data);
       });
-  } else if (req.url === '/jack_black.jpg') {
-    fs.readFile('./jack_black.jpg', (err, data) => {
+  } else if (req.url === '/card.png') {
+    fs.readFile('./card.png', (err, data) => {
       if (err) {
         res.statusCode = 500;
         res.end('Internal Server Error');
@@ -87,9 +87,21 @@ const server = http.createServer((req, res) => {
       }
 
       res.statusCode = 200;
-      res.setHeader('Content-Type', 'image/jpeg');
+      res.setHeader('Content-Type', 'image/png');
       res.end(data);
     });
+} else if (req.url === '/bg.jpg') {
+  fs.readFile('./bg.jpg', (err, data) => {
+    if (err) {
+      res.statusCode = 500;
+      res.end('Internal Server Error');
+      return;
+    }
+
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'image/jpeg');
+    res.end(data);
+  });
 } else {
     res.statusCode = 404;
     res.end('Not Found');
