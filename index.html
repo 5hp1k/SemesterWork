@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Blackjack</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+      <h1>Capybara Blackjack</h1>
+  </header>
+  <main>
+    
+    <section id="welcome">
+      <h2>Добро пожаловать!</h2>
+      <label for="name">Введите ваше имя:</label>
+      <input type="text" id="name" />
+      <button id="startButton">Далее</button>
+    </section>
+
+    <section id="gameContent" class="centered" style="display: none;">
+      <div id="button-container">
+        <button id="newDeckButton">Новая колода</button>
+        <button id="statsButton">Статистика</button>
+      </div>
+        <div id="game-area">
+            <div id="dealer-area">
+                <img id="dealer-avatar" src="" alt="Дилер">
+                <h2>
+                  <span id="dealer-nickname">Дилер </span>(<span id="dealer-number">?</span>)
+                </h2>
+                <div id="dealer-cards">
+                  <!-- Карты дилера появляются здесь -->
+                </div>
+            </div>
+            <div id="player-area">
+              <img id="player-avatar" src="" alt="Игрок">
+              <h2>
+                <span id="player-nickname"></span> (<span id="player-number"></span>) <span id="announcement"></span>
+              </h2>
+              <div id="player-cards">
+                <!-- Карты игрока появляются здесь -->
+              </div>
+            </div>
+            
+            <div id="action-area">
+                <button id="newHandButton">Обновить руку</button>
+                <button id="takeCardButton">Взять карту</button>
+                <button id="passButton">Пас</button>
+            </div>
+        </div> 
+    </section>
+
+    <section id="statContent" class="centered" style="display: none;">
+      <div id="button-container">
+        <button id="backButton">Назад в игру</button>
+        <button id="allButton">Все</button>
+        <button id="winButton">Победные</button>
+        <button id="loseButton">Проигранные</button>
+        <button id="tieButton">Ничьи</button>
+      </div>
+      <h2>Статистика игрока</h2>
+      <div id="table-container">
+        <table id="gameTable" class="centered-table">
+          <thead>
+            <tr>
+              <th>Исход игры</th>
+              <th>Очки игрока</th>
+              <th>Очки дилера</th>
+              <th>Время игры</th>
+            </tr>
+          </thead>
+          <tbody id="gameTableBody">
+            <!-- Записи в таблице появляются здесь -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+  <script src="main.js" type="module"></script>
+</body>
+</html>

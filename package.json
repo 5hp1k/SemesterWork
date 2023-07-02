@@ -1,0 +1,9 @@
+{
+  "name": "semester-work",
+  "version": "18.1",
+  "description": "just a tiny card game website",
+  "main": "run.js",
+  "scripts": {},
+  "author": "5hpik",
+  "license": "ISC"
+}
